@@ -12,11 +12,12 @@ import HostGuarantee from "@/components/sections/HostGuarantee";
 import ImageMarquee from "@/components/sections/ImageMarquee";
 
 function HomeContent() {
-  const { data: session } = authClient.useSession();
+  // ✅ isPending চেক করা হলো, যাতে সেশন লোড হওয়া পর্যন্ত অপেক্ষা করে
+  const { data: session, isPending } = authClient.useSession();
 
   useEffect(() => {
-    // ✅ গুগল লগইনের পর একবারই টোস্ট দেখাবে
-    if (session?.user && typeof window !== "undefined") {
+    // ✅ সেশন লোড শেষ হলে এবং ইউজার থাকলে টোস্ট দেখাবে
+    if (!isPending && session?.user && typeof window !== "undefined") {
       const hasShown = sessionStorage.getItem("welcomeToastShown");
       
       if (!hasShown) {
@@ -24,7 +25,7 @@ function HomeContent() {
         sessionStorage.setItem("welcomeToastShown", "true");
       }
     }
-  }, [session]);
+  }, [session, isPending]);
 
   return (
     <div className="flex flex-col w-full overflow-hidden">
