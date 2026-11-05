@@ -7,6 +7,11 @@ const client = new MongoClient(process.env.MONGODB_URI as string);
 const db = client.db("StudioSpaceX");
 
 export const auth = betterAuth({
+  // ✅ baseURL যোগ করা হলো (Vercel এর লিংক)
+  baseURL: process.env.NODE_ENV === "production" 
+    ? "https://studiospace-x.vercel.app" 
+    : "http://localhost:3000",
+
   database: mongodbAdapter(db, { client }),
   emailAndPassword: { enabled: true },
   socialProviders: {
@@ -23,7 +28,6 @@ export const auth = betterAuth({
       maxAge: 7 * 24 * 60 * 60,
     },
   },
-  // ✅ এখানে trustedOrigins যোগ করুন
   trustedOrigins: [
     "http://localhost:3000",
     "https://studiospace-x.vercel.app"
