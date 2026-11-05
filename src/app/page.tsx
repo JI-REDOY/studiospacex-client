@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import HeroSlider from "@/components/sections/HeroSlider";
@@ -13,15 +13,18 @@ import ImageMarquee from "@/components/sections/ImageMarquee";
 
 function HomeContent() {
   const { data: session } = authClient.useSession();
-  const [hasShownToast, setHasShownToast] = useState(false);
 
   useEffect(() => {
-    // ✅ সেশন থাকলে সাকসেস টোস্ট দেখাবে
-    if (session?.user && !hasShownToast) {
-      toast.success(`Welcome back, ${session.user.name}!`);
-      setHasShownToast(true);
+    // ✅ গুগল লগইনের পর একবারই টোস্ট দেখাবে
+    if (session?.user && typeof window !== "undefined") {
+      const hasShown = sessionStorage.getItem("welcomeToastShown");
+      
+      if (!hasShown) {
+        toast.success(`Welcome back, ${session.user.name}!`);
+        sessionStorage.setItem("welcomeToastShown", "true");
+      }
     }
-  }, [session, hasShownToast]);
+  }, [session]);
 
   return (
     <div className="flex flex-col w-full overflow-hidden">
