@@ -99,8 +99,7 @@ export default function HeroSlider() {
   const [activeSlide, setActiveSlide] = useState(0);
 
   return (
-    // ✅ ফিক্স: 100dvh এর জায়গায় 85vh দেওয়া হলো, যাতে মোবাইলে কেটে না যায়
-    <section className="w-full relative h-[85vh] min-h-[550px] md:min-h-[600px] bg-black">
+    <section className="w-full relative h-[85vh] min-h-[550px] md:min-h-[500px] lg:min-h-[600px] bg-black">
       <Swiper
         modules={[Autoplay, Pagination, EffectFade]}
         effect="fade"
@@ -118,13 +117,15 @@ export default function HeroSlider() {
               style={{ backgroundImage: `url(${slide.image})` }}
             />
             
-            <div className="absolute inset-0 bg-black/40 md:bg-gradient-to-r md:from-black md:via-black/80 md:to-transparent" />
+            {/* ✅ ওভারলে হালকা করা হয়েছে (bg-black/40 থেকে bg-black/20) যাতে ছবি উজ্জ্বল দেখায় */}
+            <div className="absolute inset-0 bg-black/20 md:bg-gradient-to-r md:from-black/90 md:via-black/50 md:to-transparent" />
 
-            <div className="absolute inset-0 z-10 flex items-center pt-10 md:pt-0">
+            <div className="absolute inset-0 z-10 flex items-center pt-24 md:pt-20">
               <div className="w-full px-6 md:px-8 md:container md:mx-auto">
                 <div className="w-full md:w-2/3 lg:w-1/2 text-center md:text-left">
                   
-                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 md:mb-6 leading-[1.1] font-[family-name:var(--font-playfair)] drop-shadow-lg">
+                  {/* ✅ ১৯ ইঞ্চি স্ক্রিনের জন্য টেক্সট সাইজ অ্যাডজাস্ট করা হয়েছে */}
+                  <h1 className="text-4xl md:text-4xl lg:text-7xl font-bold text-white mb-3 md:mb-4 lg:mb-6 leading-[1.1] font-[family-name:var(--font-playfair)] drop-shadow-lg">
                     {slide.titleTop} <br />
                     <span className="text-primary italic drop-shadow-md">
                       {activeSlide === index ? (
@@ -136,7 +137,7 @@ export default function HeroSlider() {
                     {slide.titleBottom}
                   </h1>
                   
-                  <p className="text-sm md:text-xl text-gray-200 mb-6 md:mb-8 max-w-md mx-auto md:mx-0 leading-relaxed drop-shadow-md">
+                  <p className="text-sm md:text-sm lg:text-xl text-gray-200 mb-5 md:mb-6 lg:mb-8 max-w-md mx-auto md:mx-0 leading-relaxed drop-shadow-md">
                     {slide.subtitle}
                   </p>
                   
@@ -144,12 +145,12 @@ export default function HeroSlider() {
                     <Link href={slide.link1} className="w-full sm:w-auto">
                       <Button 
                         size="lg" 
-                        className="w-full sm:w-auto rounded-full px-6 md:px-8 py-5 md:py-6 text-sm md:text-lg font-bold text-white
+                        className="w-full sm:w-auto rounded-full px-6 md:px-6 lg:px-8 py-5 md:py-4 lg:py-6 text-sm md:text-sm lg:text-lg font-bold text-white
                         bg-gradient-to-b from-[#10b981] to-[#059669]
                         shadow-[0_0_20px_rgba(16,185,129,0.4),inset_0_2px_4px_rgba(255,255,255,0.3)]
                         hover:scale-105 hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] transition-all border-none"
                       >
-                        {slide.cta1} <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5" />
+                        {slide.cta1} <ArrowRight className="ml-2 h-4 w-4 lg:h-5 lg:w-5" />
                       </Button>
                     </Link>
                     
@@ -157,13 +158,13 @@ export default function HeroSlider() {
                       <Button 
                         size="lg" 
                         variant="outline" 
-                        className="w-full sm:w-auto rounded-full px-6 md:px-8 py-5 md:py-6 text-sm md:text-lg font-semibold 
+                        className="w-full sm:w-auto rounded-full px-6 md:px-6 lg:px-8 py-5 md:py-4 lg:py-6 text-sm md:text-sm lg:text-lg font-semibold 
                         text-white/90 bg-black/40 backdrop-blur-md 
                         border border-white/30 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]
                         hover:bg-white/20 hover:text-white hover:border-white/40
                         transition-all duration-300"
                       >
-                        <Play className="mr-2 h-4 w-4 md:h-5 md:w-5" /> {slide.cta2}
+                        <Play className="mr-2 h-4 w-4 lg:h-5 lg:w-5" /> {slide.cta2}
                       </Button>
                     </Link>
                   </div>
