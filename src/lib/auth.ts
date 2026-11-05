@@ -4,7 +4,6 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { jwt } from "better-auth/plugins";
 
 const client = new MongoClient(process.env.MONGODB_URI as string);
-// ✅ ডাটাবেসের নাম বড় হাতের অক্ষরে
 const db = client.db("StudioSpaceX");
 
 export const auth = betterAuth({
@@ -24,4 +23,9 @@ export const auth = betterAuth({
       maxAge: 7 * 24 * 60 * 60,
     },
   },
+  // ✅ এখানে trustedOrigins যোগ করুন
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://studiospace-x.vercel.app"
+  ],
 });
