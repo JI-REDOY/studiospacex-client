@@ -64,12 +64,17 @@ export default function LoginPage() {
 
   const handleGoogleLogin = async () => {
     try {
+      // ✅ গুগলে রিডাইরেক্ট করার আগে টোস্ট দেখাবে
+      toast.loading("Redirecting to Google...", { id: "google-login" });
+      
       await authClient.signIn.social({ 
         provider: "google",
         callbackURL: typeof window !== "undefined" ? window.location.origin : "/" 
       });
+      
     } catch (error) {
-      toast.error("Google login failed");
+      // ✅ কোনো এরর হলে টোস্ট দেখাবে
+      toast.error("Google login failed", { id: "google-login" });
     }
   };
 
