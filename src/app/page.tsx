@@ -1,4 +1,8 @@
-import { Suspense } from "react";
+"use client";
+
+import { Suspense, useEffect, useState } from "react";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 import HeroSlider from "@/components/sections/HeroSlider";
 import Categories from "@/components/sections/Categories";
 import FeaturedStudios from "@/components/sections/FeaturedStudios";
@@ -7,7 +11,18 @@ import HowItWorks from "@/components/sections/HowItWorks";
 import HostGuarantee from "@/components/sections/HostGuarantee";
 import ImageMarquee from "@/components/sections/ImageMarquee";
 
-export default function Home() {
+function HomeContent() {
+  const { data: session } = authClient.useSession();
+  const [hasShownToast, setHasShownToast] = useState(false);
+
+  useEffect(() => {
+    // ✅ সেশন থাকলে সাকসেস টোস্ট দেখাবে
+    if (session?.user && !hasShownToast) {
+      toast.success(`Welcome back, ${session.user.name}!`);
+      setHasShownToast(true);
+    }
+  }, [session, hasShownToast]);
+
   return (
     <div className="flex flex-col w-full overflow-hidden">
       
@@ -28,5 +43,13 @@ export default function Home() {
       </div>
 
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="h-screen w-full bg-muted animate-pulse" />}>
+      <HomeContent />
+    </Suspense>
   );
 }
