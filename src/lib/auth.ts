@@ -25,10 +25,12 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      // ✅ অ্যাকাউন্ট সিলেক্ট করার অপশন
+      prompt: "select_account", 
     },
   },
 
-  // ✅ গুগল অ্যাকাউন্ট লিংক করার পারমিশন (unable_to_link_account এরর ফিক্স)
+  // ✅ গুগল অ্যাকাউন্ট লিংক করার পারমিশন
   account: {
     accountLinking: {
       trustedProviders: ["google"],
